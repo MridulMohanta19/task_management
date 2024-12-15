@@ -33,7 +33,7 @@ const handleDeleteTask = async (taskId) => {
 useEffect(() => {
   const loadTasks = async () => {
     const data = await fetchTasks();
-    setTasks(data);
+    setTasks(data.data);
   };
   loadTasks();
 }, []);

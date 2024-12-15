@@ -9,7 +9,11 @@ const TaskList = ({ tasks, onEdit, onDelete }) => {
             key={task.id}
             className="p-4 border border-gray-200 rounded flex justify-between items-center"
           >
-            <span>{task.name}</span>
+            <span>{task.title}</span>
+            <span>{task.description}</span>
+            <span>{task.dueDate}</span>
+            <span>{task.priority}</span>
+            <span>{task.status}</span>
             <div className="space-x-2">
               <button
                 onClick={() => onEdit(task)}
