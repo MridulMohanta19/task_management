@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:7172/api';
+const API_BASE_URL = 'https://localhost:7033/api/';
 
 export const fetchTasks = async () => {
   const response = await axios.get(`${API_BASE_URL}/Task`);
@@ -24,5 +24,16 @@ export const updateTask = async (id, task) => {
 
 export const deleteTask = async (id) => {
   const response = await axios.delete(`${API_BASE_URL}/Task/${id}`);
+  return response.data;
+};
+
+
+export const Register= async (id) => {
+  const response = await axios.delete(`${API_BASE_URL}/Auth/register`);
+  return response.data;
+};
+
+export const Login= async (id) => {
+  const response = await axios.delete(`${API_BASE_URL}/Auth/Login`);
   return response.data;
 };
