@@ -1,9 +1,10 @@
 import React from "react";
 
 const TaskList = ({ tasks, onEdit, onDelete }) => {
+  console.log("TASK LIST:", tasks);
     return (
       <div className="space-y-4">
-        {tasks.map((task) => (
+        {Array.isArray(tasks) && tasks.map((task) => (
           <div
             key={task.id}
             className="p-4 border border-gray-200 rounded flex justify-between items-center"
