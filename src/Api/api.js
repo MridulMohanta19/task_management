@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://localhost:7033/api/';
+const API_BASE_URL = 'https://localhost:7033/api';
 
 export const fetchTasks = async () => {
   const response = await axios.get(`${API_BASE_URL}/Task`);
@@ -33,8 +33,8 @@ export const Register= async (id) => {
   return response.data;
 };
 
-export const LoginAPI= async (email, pass) => {
-  const response = await axios.post(`${API_BASE_URL}/Auth/Login`, {email, pass},{
+export const LoginAPI= async (email, password) => {
+  const response = await axios.post(`${API_BASE_URL}/Auth/Login`, {email, password},{
     headers: {
       'Content-Type': 'multipart/form-data',
     },
