@@ -1,27 +1,39 @@
 import { useState } from "react";
+import { LoginAPI } from "../Api/api";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = ({onLogin}) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+   
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+  const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onLogin({username, password});
+        const response = LoginAPI(data.email, data.password);
+        if (response && response.accessToken){
+           localStorage.setItem('token', response.accessToken);
+           navigate('/dashboard');
+        } else {
+          alert('Invalid username or password');
+        }
     }
   return (
     <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
       <input
         type="username"
         placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={data.email}
+        onChange={(e) =>  setData({...data, email: e.target.value})}
         className="p-2 border border-gray-300 rounded"
       />
       <input
         type="password"
         placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        value={data.password}
+        onChange={(e) => setData({...data, password: e.target.value})}
         className="p-2 border border-gray-300 rounded"
       />
       <button

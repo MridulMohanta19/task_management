@@ -33,7 +33,11 @@ export const Register= async (id) => {
   return response.data;
 };
 
-export const Login= async (id) => {
-  const response = await axios.delete(`${API_BASE_URL}/Auth/Login`);
+export const LoginAPI= async (email, pass) => {
+  const response = await axios.post(`${API_BASE_URL}/Auth/Login`, {email, pass},{
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
   return response.data;
 };
