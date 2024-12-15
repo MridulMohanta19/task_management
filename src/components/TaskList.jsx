@@ -1,6 +1,5 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { updateTask } from "../Api/api";
-
 
 const TaskList = ({ tasks, onEdit, onDelete }) => {
   const [editingTaskId, setEditingTaskId] = useState(null);
@@ -20,6 +19,7 @@ const TaskList = ({ tasks, onEdit, onDelete }) => {
       await updateTask(editingTaskId, updatedTask);
       setEditingTaskId(null); // Exit editing mode
       if (onEdit) onEdit(editingTaskId, updatedTask); // Optional: Notify parent about the update
+      window.location.reload(); // Reload the page
     } catch (error) {
       console.error("Failed to update task:", error);
     }
