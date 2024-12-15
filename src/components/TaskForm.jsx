@@ -50,7 +50,7 @@ const TaskForm = ({ onSubmit, task }) => {
       />
       <button
         type="submit"
-        className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        className="p-2 bg-purple-500 text-white rounded hover:bg-green-600"
       >
         {task ? 'Update Task' : 'Add Task'}
       </button>

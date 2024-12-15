@@ -10,15 +10,15 @@ const TaskList = ({ tasks, onEdit, onDelete }) => {
     setUpdatedTask(task);
   };
 
-  const handleInputChange = (e, field) => {
-    setUpdatedTask((prev) => ({ ...prev, [field]: e.target.value }));
+  const handleInputChange = (event, field) => {
+    setUpdatedTask((prev) => ({ ...prev, [field]: event.target.value }));
   };
 
   const handleSaveClick = async () => {
     try {
       await updateTask(editingTaskId, updatedTask);
       setEditingTaskId(null); // Exit editing mode
-      if (onEdit) onEdit(editingTaskId, updatedTask); // Optional: Notify parent about the update
+      if (onEdit) onEdit(editingTaskId, updatedTask); // Notify parent about the update
       window.location.reload(); // Reload the page
     } catch (error) {
       console.error("Failed to update task:", error);
@@ -34,48 +34,57 @@ const TaskList = ({ tasks, onEdit, onDelete }) => {
             className="p-4 border border-gray-200 rounded flex justify-between items-center"
           >
             {editingTaskId === task.id ? (
-              <>
+              <div className="flex flex-col space-y-2 w-full">
                 <input
                   type="text"
-                  value={updatedTask.title}
+                  value={updatedTask.title || ""}
                   onChange={(e) => handleInputChange(e, "title")}
-                  className="p-2 border rounded"
+                  placeholder="Title"
+                  className="p-2 border rounded w-full"
                 />
-                <input
-                  type="text"
-                  value={updatedTask.description}
+                <textarea
+                  value={updatedTask.description || ""}
                   onChange={(e) => handleInputChange(e, "description")}
-                  className="p-2 border rounded"
-                />
+                  placeholder="Description"
+                  className="p-2 border rounded w-full"
+                ></textarea>
                 <input
                   type="date"
-                  value={updatedTask.dueDate}
+                  value={updatedTask.dueDate || ""}
                   onChange={(e) => handleInputChange(e, "dueDate")}
-                  className="p-2 border rounded"
+                  className="p-2 border rounded w-full"
                 />
-                <input
-                  type="text"
-                  value={updatedTask.priority}
+                <select
+                  value={updatedTask.priority || ""}
                   onChange={(e) => handleInputChange(e, "priority")}
-                  className="p-2 border rounded"
-                />
-                <input
-                  type="text"
-                  value={updatedTask.status}
+                  className="p-2 border rounded w-full"
+                >
+                  <option value="">Select Priority</option>
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                </select>
+                <select
+                  value={updatedTask.status || ""}
                   onChange={(e) => handleInputChange(e, "status")}
-                  className="p-2 border rounded"
-                />
-              </>
+                  className="p-2 border rounded w-full"
+                >
+                  <option value="">Select Status</option>
+                  <option value="Pending">Pending</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
             ) : (
-              <>
-                <span>{task.title}</span>
-                <span>{task.description}</span>
-                <span>{task.dueDate}</span>
-                <span>{task.priority}</span>
-                <span>{task.status}</span>
-              </>
+              <div className="flex flex-col space-y-1 w-full">
+                <span className="font-semibold text-gray-700">{task.title}</span>
+                <span className="text-gray-600">{task.description}</span>
+                <span className="text-sm text-gray-500">Due: {task.dueDate}</span>
+                <span className="text-sm text-gray-500">Priority: {task.priority}</span>
+                <span className="text-sm text-gray-500">Status: {task.status}</span>
+              </div>
             )}
-            <div className="space-x-2">
+            <div className="flex space-x-2">
               {editingTaskId === task.id ? (
                 <button
                   onClick={handleSaveClick}
@@ -86,7 +95,7 @@ const TaskList = ({ tasks, onEdit, onDelete }) => {
               ) : (
                 <button
                   onClick={() => handleEditClick(task)}
-                  className="p-2 bg-yellow-400 rounded"
+                  className="p-2 bg-yellow-400 text-white rounded"
                 >
                   Edit
                 </button>
